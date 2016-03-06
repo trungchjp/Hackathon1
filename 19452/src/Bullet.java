@@ -7,12 +7,10 @@ import java.io.IOException;
 /**
  * Created by Tdh4vnPC on 3/1/2016.
  */
-public class Bullet extends GameObject{
+public class Bullet extends GameObject {
 
     private int speed;
     private int speed1;
-    private int positionX1;
-    private int positionY1;
     private int typeBullet;
 
     public int getTypeBullet() {
@@ -27,10 +25,8 @@ public class Bullet extends GameObject{
     private Bullet() {
         positionX = 0;
         positionY = 0;
-        positionX1 = 0;
-        positionX1 = 0;
-
     }
+
     //Constructor co tham so truyen vao
     public Bullet(int positionX, int positionY, int speed, int typeBullet) {
         this.positionX = positionX;
@@ -51,38 +47,41 @@ public class Bullet extends GameObject{
 
                 }
                 break;
+            case 3:
+                try {
+                    this.sprite = ImageIO.read(new File("Resources/Dan1.png"));
+                } catch (IOException e) {
+
+                }
+                break;
         }
     }
-//    public Bullet(int positionX1, int positionY1){
-//        this.positionX1 = positionY1;
-//        this.positionY1 = positionY1;
-//
-//    }
 
     //Phuong thuc di chuyen dan
-    public void move(){
-
+    public void move() {
         this.positionY -= this.speed;
-//        this.positionX +=this.speed;
+    }
 
-    }
-    public void moveE(){
-//        this.positionX1 -=this.speed1;
-        this.positionY1 -=this.speed1;
-    }
+    private void move2() {
+        if (this.speed < 0) {
+            this.positionY -= this.speed;
+            this.positionX -= this.speed;
+        } else {
+            this.positionY -= this.speed;
+            this.positionX += this.speed;
+        }
+}
 
 
     //Phuong thuc cap nhat trang thai di chuyen vien dan
-    public void update(){
-        this.move();
-        this.moveE();
+    public void update() {
+        move();
 
     }
 
     //Phuong thuc ve dan
-    public void draw(Graphics g){
-        g.drawImage(sprite,(int)positionX,(int)positionY,null);
-        g.drawImage(sprite,positionX1,positionY1,null);
+    public void draw(Graphics g) {
+        g.drawImage(sprite, (int) positionX, (int) positionY, null);
     }
 
     public double getPositionX() {
@@ -100,24 +99,14 @@ public class Bullet extends GameObject{
     public void setPositionY(int positionY) {
         this.positionY = positionY;
     }
-    public int getPositionX1() {
-        return positionX1;
+
+    public int getSpeed1() {
+        return speed1;
     }
 
-    public void setPositionX1(int positionX1) {
-        this.positionX1 = positionX1;
+    public void setSpeed1(int speed1) {
+        this.speed1 = speed1;
     }
-
-    public int getPositionY1() {
-        return positionY1;
-    }
-
-    public void setPositionY1(int positionY1) {
-        this.positionY1 = positionY1;
-    }
-
-    public int getSpeed1(){return speed1;}
-    public void setSpeed1(int speed1){this.speed1 = speed1;}
 
     public int getSpeed() {
         return speed;

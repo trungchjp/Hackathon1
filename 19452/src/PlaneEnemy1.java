@@ -24,8 +24,13 @@ public class PlaneEnemy1 extends PlaneEnemy {
 
     //phuong thuc ban dan cua may bay bay theo hinh elip
     public void shot() {
-        Bullet bullet = new Bullet((int)positionX + 15, (int)positionY + 59, -5, 1);
-        vecBul.add(bullet);
+        Bullet bullet1 = new Bullet((int)positionX + 15, (int)positionY + 59, 5, 1);
+        Bullet bullet2 = new Bullet((int)positionX + 15, (int)positionY + 59, -5, 1);
+        Bullet bullet3 = new Bullet((int)positionX + 15, (int)positionY + 59, -5, 1);
+        vecBul.add(bullet1);
+        vecBul.add(bullet2);
+        vecBul.add(bullet3);
+
 
     }
 

@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.Vector;
 
 /**
@@ -19,18 +20,18 @@ public class GameWindow extends Frame implements Runnable {
     //PlaneEnemy planeEnemy;
     Vector<PlaneEnemy> vectorPlaneEnemy = new Vector<PlaneEnemy>();
     Vector<OtherObject> vectorOject = new Vector<>();
+    Vector<RandomBird> vectorBird = new Vector<>();
     int direction = 0;
 
     //Phuong thuc khoi tao gia tri ban dau cho Plane
     private void initPlane(){
-
         planeMoveByKey = new Plane(200,200,3,4);
         planeMoveByMouse = new Plane(300,300,1,2);
-
-        vectorPlaneEnemy.add(new PlaneEnemy1(200, 200,2, 5));
         vectorPlaneEnemy.add(new PlaneEnemy1(100, 100,2, 5));
         vectorPlaneEnemy.add(new PlaneEnemy2(120, 150,2, 6));
         vectorPlaneEnemy.add(new PlaneEnemy2(150, 120,2, 6));
+        vectorBird.add(new RandomBird(20,200,1));
+        vectorBird.add(new RandomBird(100,150,2));
         vectorOject.add(new OtherObject(100,200,1));
         vectorOject.add(new OtherObject(300,500,2));
         vectorOject.add(new OtherObject(200,450,3));
@@ -47,7 +48,7 @@ public class GameWindow extends Frame implements Runnable {
         //thiet lap tieu de cho cua so
         this.setTitle("TechKids - code the change");
         //thiet lap kich thuoc cho cua so
-        this.setSize(400, 640);
+        this.setSize(640,1000);
         //thiet lap xem cua so co hien thi hay khong
         this.setVisible(true);
         //khi an vao nut X thi thoat
@@ -60,7 +61,7 @@ public class GameWindow extends Frame implements Runnable {
         });
         //load Image tu thu muc Resource
         try {
-            background = ImageIO.read(new File("Resources/Background.png"));
+            background = ImageIO.read(new File("Resources/Background1.gif"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -187,6 +188,9 @@ public class GameWindow extends Frame implements Runnable {
             planeEnemy.draw(g);
 
         }
+        for(RandomBird b : vectorBird) {
+            b.draw(g);
+        }
 
         //g.drawLine(0,0, 100, 100);
     }
@@ -202,6 +206,9 @@ public class GameWindow extends Frame implements Runnable {
             planeMoveByMouse.update();
             for(PlaneEnemy planeEnemy : vectorPlaneEnemy){
                 planeEnemy.update();
+            }
+            for(RandomBird b : vectorBird) {
+                b.update();
             }
 
             repaint();

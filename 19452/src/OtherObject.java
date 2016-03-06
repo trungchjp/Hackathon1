@@ -34,13 +34,6 @@ public class OtherObject extends GameObject {
 
                 }
                 break;
-            case 3:
-                try {
-                    this.sprite = ImageIO.read(new File("Resources/bird.png"));
-                } catch (IOException e) {
-
-                }
-                break;
         }
     }
 
