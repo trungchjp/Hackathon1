@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by hungtran on 2/26/16.
@@ -16,25 +17,31 @@ public class GameWindow extends Frame implements Runnable {
     Image image;
 
     BufferedImage background;
-    Plane planeMoveByKey,planeMoveByMouse;
+    Plane planeMoveByKey, planeMoveByMouse;
     //PlaneEnemy planeEnemy;
     Vector<PlaneEnemy> vectorPlaneEnemy = new Vector<PlaneEnemy>();
     Vector<OtherObject> vectorOject = new Vector<>();
     Vector<RandomBird> vectorBird = new Vector<>();
+    Vector<PlaneEnemy3> vectorPlaneEnemy3 = new Vector<>();
     int direction = 0;
 
     //Phuong thuc khoi tao gia tri ban dau cho Plane
-    private void initPlane(){
-        planeMoveByKey = new Plane(200,200,3,4);
-        planeMoveByMouse = new Plane(300,300,1,2);
-        vectorPlaneEnemy.add(new PlaneEnemy1(100, 100,2, 5));
-        vectorPlaneEnemy.add(new PlaneEnemy2(120, 150,2, 6));
-        vectorPlaneEnemy.add(new PlaneEnemy2(150, 120,2, 6));
-        vectorBird.add(new RandomBird(20,200,1));
-        vectorBird.add(new RandomBird(100,150,2));
-        vectorOject.add(new OtherObject(100,200,1));
-        vectorOject.add(new OtherObject(300,500,2));
-        vectorOject.add(new OtherObject(200,450,3));
+    private void initPlane() {
+        planeMoveByKey = new Plane(200, 200, 3, 4);
+        planeMoveByMouse = new Plane(300, 300, 1, 2);
+        vectorPlaneEnemy.add(new PlaneEnemy1(100, 100, 2, 5));
+        vectorPlaneEnemy.add(new PlaneEnemy2(120, 150, 2, 6));
+        vectorPlaneEnemy.add(new PlaneEnemy2(150, 120, 2, 6));
+        vectorPlaneEnemy.add(new PlaneEnemy3(200, 300, 2, 6));
+        vectorPlaneEnemy.add(new PlaneEnemy3(100, 300, 2, 6));
+        vectorPlaneEnemy.add(new PlaneEnemy3(0, 300, 2, 6));
+        vectorBird.add(new RandomBird(20, 200, 1));
+        vectorBird.add(new RandomBird(100, 150, 2));
+        vectorOject.add(new OtherObject(100, 200, 1));
+        vectorOject.add(new OtherObject(800, 500, 2));
+        vectorOject.add(new OtherObject(700, 450, 3));
+        vectorOject.add(new OtherObject(100, 200, 3));
+        vectorOject.add(new OtherObject(500, 10, 3));
 //        vectorPlaneEnemy.add(new PlaneEnemy(300, 90, 2, 1));
 //        vectorPlaneEnemy.add(new PlaneEnemy(200, 150, 2, 1));
 //        vectorPlaneEnemy.add(new PlaneEnemy(100,100, 3, 1));
@@ -46,9 +53,14 @@ public class GameWindow extends Frame implements Runnable {
 
         initPlane();
         //thiet lap tieu de cho cua so
-        this.setTitle("TechKids - code the change");
+        this.setTitle("Group 1 - 1945");
         //thiet lap kich thuoc cho cua so
-        this.setSize(640,1000);
+        this.setSize(1000, 640);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x, y);
+        this.setResizable(false);
         //thiet lap xem cua so co hien thi hay khong
         this.setVisible(true);
         //khi an vao nut X thi thoat
@@ -61,7 +73,7 @@ public class GameWindow extends Frame implements Runnable {
         });
         //load Image tu thu muc Resource
         try {
-            background = ImageIO.read(new File("Resources/Background1.gif"));
+            background = ImageIO.read(new File("Resources/Background1.jpg"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,12 +88,13 @@ public class GameWindow extends Frame implements Runnable {
             public void mouseClicked(MouseEvent e) {
 
                 //khi nhan chuot trai thi may bay di chuyen bang chuot ban
-                if(e.getModifiers()==InputEvent.BUTTON1_MASK){
+                if (e.getModifiers() == InputEvent.BUTTON1_MASK) {
                     planeMoveByMouse.shot();
 
                 }
             }
-             //phuong thuc thuc hien khi nha chuot
+
+            //phuong thuc thuc hien khi nha chuot
             @Override
             public void mousePressed(MouseEvent e) {
 
@@ -113,7 +126,7 @@ public class GameWindow extends Frame implements Runnable {
             //Phuong thuc thuc hien khi di chuyen chuot thi may bay di chuyen
             @Override
             public void mouseMoved(MouseEvent e) {
-                planeMoveByMouse.move(e.getX(),e.getY());
+                planeMoveByMouse.move(e.getX(), e.getY());
             }
         });
         //goi phuong thuc xu ly ban phim
@@ -123,24 +136,26 @@ public class GameWindow extends Frame implements Runnable {
             public void keyTyped(KeyEvent e) {
 
             }
+
             //khi dang giu phim
             @Override
             public void keyPressed(KeyEvent e) {
 
 
-                if(e.getKeyCode() == KeyEvent.VK_A) {
+                if (e.getKeyCode() == KeyEvent.VK_A) {
                     planeMoveByKey.setDirection(3);
-                } else if(e.getKeyCode() == KeyEvent.VK_D) {
+                } else if (e.getKeyCode() == KeyEvent.VK_D) {
                     planeMoveByKey.setDirection(4);
-                } else if(e.getKeyCode() == KeyEvent.VK_S) {
+                } else if (e.getKeyCode() == KeyEvent.VK_S) {
                     planeMoveByKey.setDirection(1);
-                } else if(e.getKeyCode() == KeyEvent.VK_W) {
+                } else if (e.getKeyCode() == KeyEvent.VK_W) {
                     planeMoveByKey.setDirection(2);
-                } else if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     planeMoveByKey.shot();
                 }
 
             }
+
             //khi nhac phim len
             @Override
             public void keyReleased(KeyEvent e) {
@@ -156,58 +171,61 @@ public class GameWindow extends Frame implements Runnable {
 
     private void setCursor() {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Point hotSpot = new Point(0,0);
+        Point hotSpot = new Point(0, 0);
         BufferedImage cursorImage = new BufferedImage(1, 1, BufferedImage.TRANSLUCENT);
         Cursor invisibleCursor = toolkit.createCustomCursor(cursorImage, hotSpot, "invisibleCursor");
         setCursor(invisibleCursor);
     }
+
     @Override
-    public void update(Graphics g){
-        if(image == null){
+    public void update(Graphics g) {
+        if (image == null) {
             image = createImage(this.getWidth(), this.getHeight());
-            seconds= image.getGraphics();
+            seconds = image.getGraphics();
         }
         seconds.setColor(getBackground());
-        seconds.fillRect(0,0,getWidth(),getHeight());
+        seconds.fillRect(0, 0, getWidth(), getHeight());
         seconds.setColor(getForeground());
         paint(seconds);
-        g.drawImage(image,0,0,null);
+        g.drawImage(image, 0, 0, null);
     }
+
     //Ham ve, ve moi.thu o day
     @Override
     public void paint(Graphics g) {
 
         super.paint(g);
         g.drawImage(background, 0, 0, null);
-        for(OtherObject o : vectorOject){
+        for (OtherObject o : vectorOject) {
             o.draw(g);
         }
         planeMoveByKey.draw(g);
         planeMoveByMouse.draw(g);
-        for(PlaneEnemy planeEnemy : vectorPlaneEnemy){
+        for (PlaneEnemy planeEnemy : vectorPlaneEnemy) {
             planeEnemy.draw(g);
 
         }
-        for(RandomBird b : vectorBird) {
+        for (RandomBird b : vectorBird) {
             b.draw(g);
         }
 
         //g.drawLine(0,0, 100, 100);
     }
+
     //Game Loop
     //Vong Lap game
     @Override
     public void run() {
 
 
-        while(true) {
+        while (true) {
 
             planeMoveByKey.update();
             planeMoveByMouse.update();
-            for(PlaneEnemy planeEnemy : vectorPlaneEnemy){
+            for (PlaneEnemy planeEnemy : vectorPlaneEnemy) {
                 planeEnemy.update();
             }
-            for(RandomBird b : vectorBird) {
+            for (RandomBird b : vectorBird) {
                 b.update();
             }
 

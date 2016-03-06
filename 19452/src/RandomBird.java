@@ -12,9 +12,9 @@ public class RandomBird extends GameObject {
 
     private int xVelocity = 1;
     private int yVelocity = 1;
-    private static final int RIGHT_WALL = 400;
+    private static final int RIGHT_WALL = 640;
     private static final int LEFT_WALL = 1;
-    private static final int DOWN_WALL = 400;
+    private static final int DOWN_WALL = 640;
     private static final int UP_WALL = 1;
 
     public RandomBird(int x, int y, int moveType) {
@@ -22,7 +22,7 @@ public class RandomBird extends GameObject {
         setPositionY(y);
         this.moveType = moveType;
         try {
-            setSprite(ImageIO.read(new File("Resources/bird.png")));
+            setSprite(ImageIO.read(new File("Resources/bird1.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,7 +31,7 @@ public class RandomBird extends GameObject {
     public void move() {
         if (moveType == 1) {
             elip++;
-            setPositionX(getPositionX() + (double) (15 * Math.sin(elip * 0.09)));
+            setPositionX(getPositionX() + (double) (25 * Math.sin(elip * 0.09)));
             setPositionY(getPositionY() + (double) (4 * Math.cos(elip * 0.09)));
 
         } else if (moveType == 2) {

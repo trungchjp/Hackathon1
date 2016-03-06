@@ -34,6 +34,13 @@ public class OtherObject extends GameObject {
 
                 }
                 break;
+            case 3:
+                try {
+                    this.sprite = ImageIO.read(new File("Resources/cloud1.png"));
+                } catch (IOException e) {
+
+                }
+                break;
         }
     }
 
